@@ -1,0 +1,19 @@
+stages:
+- build
+- deploy
+
+build:
+  stage: build
+  tags:
+    - build
+  script:
+    - ./script/build.sh
+
+deploy:
+  stage: deploy
+  needs:
+    - build
+  tags:
+    - beta
+  script:
+    - ./script/deploy.sh

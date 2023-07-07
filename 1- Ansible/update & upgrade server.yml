@@ -1,0 +1,11 @@
+---
+- hosts: devops
+  become: true
+    #vars_files:
+    #- vars/default.yml
+  tasks:
+    - name: Update and upgrade apt packages
+      become: true
+      apt:
+        upgrade: yes
+        update_cache: yes

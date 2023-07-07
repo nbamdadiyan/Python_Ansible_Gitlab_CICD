@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  smurf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8000:5000"
