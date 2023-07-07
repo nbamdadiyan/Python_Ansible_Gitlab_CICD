@@ -1,0 +1,60 @@
+
+Smurftown Assignment
+Background
+
+In Smurftown the local smurf-government has finally allowed autonomous drive, but only on a certain road. The Smurfs in Smurftown desperately want their new, shiny, self-driving cars to drive themselves, but the road network data that is used to navigate is not yet annotated with which roads are certified. Until the data is updated it will be illegal to activate autonomous drive, and hundreds of smurfs will continue to die in road accidents every day (the smurfs are notoriously bad drivers).
+Assignment
+
+It is your job to update the road network data. The certified autonomous road in Smurftown has been defined by the very clever smurf-lawyers to be:
+
+    The longest possible highway path within the city limits of Smurftown that returns to itself, and overlaps no parts of itself.
+
+You have already filtered out every path that is not a highway from the road network data. You have the remaining data in a file. In the file, every line is a space separated list of numbers. The first number (segment ID) is an integer, the second and third numbers (x and y coordinate) are real numbers in decimal notation. The remaining numbers are integers specifying IDs of the segments where the road continues, there are 0-2 such IDs. Continuations are only specified in the forward direction, so in the example below, ID 1 connects to ID 2, but ID 2 does not connect to ID 1.
+
+Example data:
+
+1 0.0 0.0 2 4
+2 0.0 1.0 3
+3 0.0 2.0
+4 -0.5 0.0 6
+5 -0.1 0.1 6
+6 -0.5 -0.5 1
+
+The first line above is interpreted as: Segment 1 is located at x=0.0, y=0.0 and continues to segment 2 and 4 (it splits).
+
+Your assignment is to write a program, that takes a file name as it first argument, finds the longest path that returns to itself, and prints the segment IDs of that path in path order (starting with the lowest ID) separated by spaces.
+
+Note that the "longest path" is the geometrically longest path, and does not necessarily have the highest number of segments.
+
+The correct output for the example data above is:
+
+1 4 6
+
+Your submission shall contain source code and instructions for building and running it on a Linux system.
+Regarding the "overlaps no part of itself" requirement
+
+Note that:
+
+    Each ID used in the path shall be used only once, i.e., for each ID there shall shall be only one segment going in and one segment going out.
+    While ID's may only be used once, segments may cross geometrically. The Smurftown officials can build appropriate highway bridges or tunnels for such a design.
+
+I.e., overlap is only defined as when a given segment ID is re-used, but you may assume that for any two separate highway segment connections that seemingly overlaps in the Euclidean plane but are not defining the same bidirectional segment connection, they describe two different highway path segments, and any geometrical crossing of such segment connections is resolved by the Smurftown officals by means of bridges or tunnels.
+
+To emphasize on this fact, note that for the following graph example:
+
+1 0.0 0.0 3
+2 0.0 1.0 4
+3 1.0 1.0 1 2
+4 1.0 0.0 1 3
+
+The following is a feasible path:
+
+    1 -> 3 -> 2 -> 4 (-> 1)
+
+As is:
+
+    1 -> 3 (-> 1)
+
+However, the following path is not valid, as it violates the overlapping requirement for re-using segment IDs (specifically segment ID 3):
+
+    1 -> 3 -> 2 -> 4 -> 3 (-> 1)
